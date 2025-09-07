@@ -1,0 +1,9 @@
+.vs/
+.idea/
+.vs2022/
+
+
+Debug/
+obj/
+bin/
+
