@@ -1,21 +1,70 @@
-<?xml version="1.0" encoding="utf-8"?>
 <Page
     x:Class="Mathtick.Pages.FunctionPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:Mathtick.Pages"
+    xmlns:win2dcanvas="using:Microsoft.Graphics.Canvas.UI.Xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:win2dcanvas="using:Microsoft.Graphics.Canvas.UI.Xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:models="using:Mathtick.Models" xmlns:local1="using:Mathtick.Utils"
     mc:Ignorable="d">
-
+    <Page.Resources>
+        <local1:ColorToBrushConverter x:Key="ColorToBrush"/>
+    </Page.Resources>
     <Grid>
-        <TextBlock Text="Title Large" Style="{StaticResource TitleLargeTextBlockStyle}"/>
-        <win2dcanvas:CanvasControl x:Name ="GraphCanvas" Draw="CanvasControl_Draw" ClearColor="White"/>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="250"/>
+        </Grid.RowDefinitions>
 
-        <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" Background="#AAFFFFFF" Padding="8">
-            <TextBox x:Name="EquationBox" PlaceholderText="Entrez une fonction, ex: sin(x)" />
-            <Button Content="Tracer" Click="OnPlotClick"/>
-            
+        
+        <win2dcanvas:CanvasControl PointerWheelChanged="GraphCanvas_PointerWheelChanged"  x:Name="GraphCanvas" Draw="CanvasControl_Draw" ClearColor="White" PointerPressed="GraphCanvas_PointerPressed" PointerReleased="GraphCanvas_PointerReleased" PointerMoved="GraphCanvas_PointerMoved" />
+
+        <StackPanel Grid.Row="1" Background="#AAFFFFFF" Padding="8" Spacing="8">
+
+            <StackPanel Orientation="Horizontal" Spacing="8">
+                <TextBox x:Name="EquationBox" Width="200" PlaceholderText="Entrez une fonction"/>
+
+                <DropDownButton x:Name="FunctionDropDown" Content="Fonctions" Width="150">
+                    <DropDownButton.Flyout>
+                        <MenuFlyout x:Name="FunctionMenu" />
+                    </DropDownButton.Flyout>
+                </DropDownButton>
+
+                <Button Content="Ajouter" Click="OnAddFunctionClick"></Button>
+            </StackPanel>
+
+            <ListView x:Name="ExpressionList" SelectionMode="Single">
+                <ListView.ItemTemplate>
+                    <DataTemplate x:DataType="models:MathExpression">
+                        <StackPanel Orientation="Horizontal" Spacing="8" Padding="4">
+
+                            <SplitButton x:Name="mySplit">
+                                <Border x:Name="CurrentColor" Background="{x:Bind Color, Converter={StaticResource ColorToBrush}}" Width="32" Height="32" CornerRadius="4"/>
+                                <SplitButton.Flyout>
+                                    <Flyout Placement="Bottom">
+                                        <StackPanel Orientation="Horizontal" Spacing="4" Padding="4">
+                                            <Button Width="24" Height="24" Background="Red" Click="PredefinedColor_Click"/>
+                                            <Button Width="24" Height="24" Background="Green" Click="PredefinedColor_Click"/>
+                                            <Button Width="24" Height="24" Background="Blue" Click="PredefinedColor_Click"/>
+                                            <Button Width="24" Height="24" Background="Orange" Click="PredefinedColor_Click"/>
+                                            <Button Width="24" Height="24" Background="Purple" Click="PredefinedColor_Click"/>
+                                            <Button Width="24" Height="24" Background="Black" Click="PredefinedColor_Click"/>
+                                        </StackPanel>
+                                    </Flyout>
+                                </SplitButton.Flyout>
+                            </SplitButton>
+
+                            <TextBox Text="{x:Bind Expression, Mode=TwoWay}" Width="200" FontSize="20"/>
+
+                            <TextBlock Text="{x:Bind Name}" VerticalAlignment="Center"/>
+
+                            <Button Grid.Column="3" Click="OnDeleteExpressionClick" Margin="8,0,0,0">
+                                <FontIcon  Glyph="&#xE74D;"  FontFamily="Segoe MDL2 Assets" FontSize="20" Foreground="IndianRed"/>
+                            </Button>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
         </StackPanel>
     </Grid>
 </Page>
