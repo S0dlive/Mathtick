@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "Mathtick (Package)": {
+      "commandName": "MsixPackage"
+    },
+    "Mathtick (Unpackaged)": {
+      "commandName": "Project"
+    }
+  }
+}
