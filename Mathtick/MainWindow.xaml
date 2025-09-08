@@ -18,8 +18,8 @@
         <NavigationView x:Name="nvMain" SelectionChanged="NvMain_SelectionChanged">
             <NavigationView.MenuItems>
                 <NavigationViewItem Icon="Play" Content="Fonctions" Tag="FunctionPage"/>
-                <NavigationViewItem Icon="Calculator" Content="Algèbre" Tag="AlgebraPage"/>
-                <NavigationViewItem Icon="Add" Content="IA" Tag="IAPage"/>
+                <NavigationViewItem Icon="Calculator" Content="Algèbre" Tag="IaPage"/>
+                <NavigationViewItem Icon="Library" Content="IA" Tag="NodeEditorPage"/>
                 <NavigationViewItem Icon="Setting" Content="Paramètres" Tag="SettingsPage"/>
             </NavigationView.MenuItems>
             <Frame x:Name="contentFrame"/>

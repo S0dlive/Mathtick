@@ -37,7 +37,10 @@ namespace Mathtick
                     case "FunctionPage":
                         contentFrame.Navigate(typeof(Pages.FunctionPage));
                         break;
-                    
+                    case "NodeEditorPage":
+                        contentFrame.Navigate(typeof(Pages.NodeEditorPage));
+                        break;
+
                 }
             }
         }
